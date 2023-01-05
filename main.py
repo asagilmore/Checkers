@@ -3,10 +3,16 @@ import sys
 
 from function import type
 
-class tile:
+class piece:
     def __init__ (self,player,type):
         self.player = player
         self.type = type
+
+class move:
+    def __init__(self,target,position,victim):
+        self.target = target
+        self.position = position
+        self.victim = victim
 
 board = [[0, 1, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 1, 0],
          [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0],
