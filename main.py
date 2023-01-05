@@ -3,6 +3,11 @@ import sys
 
 from function import type
 
+class tile:
+    def __init__ (self,player,type):
+        self.player = player
+        self.type = type
+
 board = [[0, 1, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 1, 0],
          [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0],
