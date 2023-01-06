@@ -14,21 +14,16 @@ class move:
         self.position = position
         self.victim = victim
 
-board = [[0, 1, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 1, 0],
-         [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0],
-         [0, 2, 0, 2, 0, 2, 0, 2], [2, 0, 2, 0, 2, 0, 2, 0]]
-realBoard = []
-for q in range(len(board)):
-    realBoard.append([])
-    for j in range(len(board[q])):
-        if board[q][j] == 1:
-            realBoard.append(tile(1, 'pawn'))
-        if board[q][j] == 2:
-            realBoard.append(tile(2, 'pawn'))
-        if board[q][j] == 0:
-            realBoard.append(None)
-def findAllMoves(board)
+board = [[None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn')], [piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None],
+         [None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None],
+         [None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None],
+         [None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn')], [piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None]]
+
+
+
+def findAllMoves(board):
+    return
+
 def findMove(board, moving): #the board is the board. moving is an array where moving[0]][moving][1] is the index for the 2d board array to point to a speciic square.
     movingPiece = board[moving[0]][moving][1] #hopefully either 1 or 2. if someone asked for nothing to move then it would be 0.
     if movingPiece.player == 1:
