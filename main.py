@@ -24,7 +24,7 @@ board = [[None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), N
          [piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None]]
 
 def findMoves(board,player):
-    moves = []
+    moves = [] 
 
     #Get all moves
     for y in range(len(board)):
@@ -112,11 +112,12 @@ def flipBoard(board):
     #switch players
     for i in board:
         for j in i:
-            if piece.player == 1:
-                piece.player = 2
-            if piece.player == 2:
-                piece.player =1
-    
+            if j != None:
+                if j.player == 1:
+                    j.player = 2
+                if j.player == 2:
+                    j.player = 1
+
     return board
 
 def doMove(move,board): #returns 2d board array
@@ -142,10 +143,32 @@ def checkScore(board): #returns #piecesP1 - #piecesP2
                     scoreP2 += 1
     return (scoreP1 - scoreP2)
 
+def draw(board):
+    sys.stdout.write("\x1b[2J\x1b[H")
+    num = 1
+    for i in board:
+        sys.stdout.write("\033[0;37;39m" + str(num) + " ")
+        for j in i:
+            if j == None:
+                sys.stdout.write("\033[0;37;39m" + "▢")
+            else:
+                if j.player == 1:
+                    if j.type == 'pawn':
+                        sys.stdout.write("\033[0;31;40m" + "▣")
+                    else:
+                        sys.stdout.write("\033[0;31;40m" + "◩")   
+                if j.player == 2:
+                    if j.type == 'pawn':
+                        sys.stdout.write("\033[0;36;40m" + "▣")
+                    else:
+                        sys.stdout.write("\033[0;36;40m" + "◩")
+            sys.stdout.write(" ")
+        num = num + 1
+        sys.stdout.write("\n")
+    sys.stdout.write("  1 2 3 4 5 6 7 8\n")
 
 
-                        
-
+draw(board)
 
 
 # def findAllMoves(board):
