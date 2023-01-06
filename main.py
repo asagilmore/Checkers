@@ -27,19 +27,81 @@ board = [[None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), N
 
 def findMoves(board,player):
     moves = []
+
+    #Get all moves
     for y in range(len(board)):
         for x in range(len(board[y])):
             if board[y][x] != None: #if tile not empty
                 if board[y][x].player == player: #if piece is players 
-                    #do top left
-                    if (x-1 >= 0) and (y-1 >= 0): #check tile exists
-                        if board[y-1][x-1] == None:
-                            moves.append(move([x,y],[x-1,y-1],None))
-                        if board[y-1][x-1].player != player: #piece is not players
-                            if board[y-2][x-2] == None: #if piece has open spot to jump too
-                                moves.append(move([x,y],[x-2,y-2],[x-1,y-1])) 
-                        
+                    moves.extend(checkPiece(board,player,x,y))
 
+    #check for jump and remove 
+    for i in moves:
+        if i.victim != None: #if jump move exists
+            for j in moves:
+                if j.victim == None:
+                    moves.remove(j)
+
+    return moves
+
+                                
+def checkPiece(board,player,x,y): #returns all possible moves for a piece on board, 
+
+    moves = []
+
+
+    #check for error
+    if board[y][x] == None:
+        print(f'error passed empty tile to checkPiece @ x:{x} y:{y}')
+        return moves
+    if board[y][x].player != player:
+        print(f'error passed tile of wrong player to checkPiece  @ x:{x} y:{y}')
+        return moves
+
+    #do top left
+    if inRange(x-1,y-1): #check tile exists
+        if board[y-1][x-1] == None: #if spot empty
+            if player == 2 or board[x][y].type == 'king': #if able to move in direction
+                moves.append(move([x,y],[x-1,y-1],None))
+        if board[y-1][x-1].player != player: #piece is not players
+            if inRange(x-2,y-2):
+                if board[y-2][x-2] == None: #if piece has open spot to jump too
+                    moves.append(move([x,y],[x-2,y-2],[x-1,y-1])) 
+    #do top right
+    if inRange(x+1,y-1): #check tile exists
+        if board[y-1][x+1] == None: #if spot empty
+            if player == 2 or board[x][y].type == 'king': #if able to move in direction
+                moves.append(move([x,y],[x+1,y-1],None))
+        if board[y-1][x+1].player != player: #piece is not players
+            if inRange(x+2,y-2):
+                if board[y-2][x+2] == None: #if piece has open spot to jump too
+                    moves.append(move([x,y],[x+2,y-2],[x+1,y-1])) 
+    #do bottom left
+    if inRange(x-1,y+1): #check tile exists
+        if board[y+1][x-1] == None: #if spot empty
+            if player == 1 or board[x][y].type == 'king': #if able to move in direction
+                moves.append(move([x,y],[x-1,y+1],None))
+        if board[y+1][x-1].player != player: #piece is not players
+            if inRange(x-2,y+2):
+                if board[y+2][x-2] == None: #if piece has open spot to jump too
+                    moves.append(move([x,y],[x-2,y+2],[x-1,y+1])) 
+    #do bottom right
+    if inRange(x+1,y+1): #check tile exists
+        if board[y+1][x+1] == None: #if spot empty
+            if player == 1 or board[x][y].type == 'king': #if able to move in direction
+                moves.append(move([x,y],[x+1,y+1],None))
+        if board[y+1][x+1].player != player: #piece is not players
+            if inRange(x+2,y+2):
+                if board[y+2][x+2] == None: #if piece has open spot to jump too
+                    moves.append(move([x,y],[x+2,y+2],[x+1,y+1])) 
+
+    return moves
+                        
+def inRange(x,y):
+    if (8 >= x >= 0) and (8 >= y >= 0):
+        return True
+    else: 
+        return False
 
 
                         
