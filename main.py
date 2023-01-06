@@ -120,6 +120,20 @@ def flipBoard(board):
                 piece.player =1
     
     return board
+
+def doMove(move,board): #returns 2d board array
+
+    board[move.position[1]][move.position[0]] = board[move.target[1]][move.target[0]]
+
+    board[move.target[1]][move.target[0]] = None
+
+    if move.victim != None:
+        board[move.victim[1]][move.victim[0]] = None
+
+    return board
+    
+ 
+
                         
 
 
