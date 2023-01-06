@@ -18,10 +18,10 @@ class move:
 #board as [y][x]
 board = [[None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn')],
          [piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None],
-         [None, None, None, None, None, None, None, None],
+         [None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn'), None, piece(1,'pawn')],
          [None, None, None, None, None, None, None, None],
          [None, None, None, None, None, None, None, None], 
-         [None, None, None, None, None, None, None, None],
+         [piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None],
          [None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn')], 
          [piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None, piece(2,'pawn'), None]]
 
@@ -131,7 +131,18 @@ def doMove(move,board): #returns 2d board array
         board[move.victim[1]][move.victim[0]] = None
 
     return board
-    
+
+def checkScore(board): #returns #piecesP1 - #piecesP2
+    scoreP1 = 0
+    scoreP2 = 0
+    for i in board:
+        for x in board:
+            if x != None:
+                if x.player == 1:
+                    scoreP1 += 1
+                if x.player == 2:
+                    scoreP2 += 1
+    return (scoreP1 - scoreP2)
  
 
                         
