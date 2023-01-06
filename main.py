@@ -1,8 +1,6 @@
 import time
 import sys
 
-from function import type
-
 class piece:
     def __init__ (self,player,type):
         self.player = player
