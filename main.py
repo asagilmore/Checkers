@@ -143,7 +143,8 @@ def checkScore(board): #returns #piecesP1 - #piecesP2
                 if x.player == 2:
                     scoreP2 += 1
     return (scoreP1 - scoreP2)
- 
+
+
 
                         
 
