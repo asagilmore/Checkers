@@ -43,7 +43,6 @@ def findMoves(board,player):
                     moves.remove(j)
 
     return moves
-
                                 
 def checkPiece(board,player,x,y): #returns all possible moves for a piece on board, 
 
@@ -103,7 +102,24 @@ def inRange(x,y):
     else: 
         return False
 
+def flipBoard(board):
 
+    #flip x
+    for i in board:
+        i.reverse()
+
+    #flip y
+    board.reverse()
+
+    #switch players
+    for i in board:
+        for j in i:
+            if piece.player == 1:
+                piece.player = 2
+            if piece.player == 2:
+                piece.player =1
+    
+    return board
                         
 
 
