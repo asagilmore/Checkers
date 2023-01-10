@@ -113,10 +113,10 @@ def flipBoard(board):
     for i in board:
         for j in i:
             if j != None:
-                if j.player == 1:
-                    j.player = 2
                 if j.player == 2:
                     j.player = 1
+                elif j.player == 1:
+                    j.player = 2
 
     return board
 
@@ -169,6 +169,9 @@ def draw(board):
 
 
 draw(board)
+board2 = flipBoard(board)
+time.sleep(2)
+draw(board2)
 
 
 
