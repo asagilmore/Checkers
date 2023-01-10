@@ -5,17 +5,12 @@ class piece:
     def __init__ (self,player,type):
         self.player = player
         self.type = type
-    def __str__(self):
-        print(f'player:{self.player} type:{type}')
 
 class move:
     def __init__(self,target,position,victim):
         self.target = target # [x,y] of target
         self.position = position # [x,y] of position that target moves too
         self.victim = victim # [x,y] of victim if true, else None
-    def __str__(self):
-        string = f'target:{self.target} position:{self.position} victim:{self.victim}'
-        return string
 
     
 #board as [y][x]
@@ -65,7 +60,7 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
         if board[y-1][x-1] == None: #if spot empty
             if player == 2 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x-1,y-1],None))
-        elif board[y-1][x-1].player != player: #piece is not players
+        if board[y-1][x-1].player != player: #piece is not players
             if inRange(x-2,y-2):
                 if board[y-2][x-2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x-2,y-2],[x-1,y-1])) 
@@ -74,7 +69,7 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
         if board[y-1][x+1] == None: #if spot empty
             if player == 2 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x+1,y-1],None))
-        elif board[y-1][x+1].player != player: #piece is not players
+        if board[y-1][x+1].player != player: #piece is not players
             if inRange(x+2,y-2):
                 if board[y-2][x+2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x+2,y-2],[x+1,y-1])) 
@@ -83,7 +78,7 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
         if board[y+1][x-1] == None: #if spot empty
             if player == 1 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x-1,y+1],None))
-        elif board[y+1][x-1].player != player: #piece is not players
+        if board[y+1][x-1].player != player: #piece is not players
             if inRange(x-2,y+2):
                 if board[y+2][x-2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x-2,y+2],[x-1,y+1])) 
@@ -92,7 +87,7 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
         if board[y+1][x+1] == None: #if spot empty
             if player == 1 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x+1,y+1],None))
-        elif board[y+1][x+1].player != player: #piece is not players
+        if board[y+1][x+1].player != player: #piece is not players
             if inRange(x+2,y+2):
                 if board[y+2][x+2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x+2,y+2],[x+1,y+1])) 
@@ -100,7 +95,7 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
     return moves
                         
 def inRange(x,y):
-    if (7 >= x >= 0) and (7 >= y >= 0):
+    if (8 >= x >= 0) and (8 >= y >= 0):
         return True
     else: 
         return False
@@ -173,12 +168,7 @@ def draw(board):
     sys.stdout.write("  1 2 3 4 5 6 7 8\n")
 
 
-moves = findMoves(board,1)
-
-
-for move in moves:
-    print(move)
-
+draw(board)
 
 
 
