@@ -1,6 +1,6 @@
 import time
 import sys
-
+import random
 class piece:
     def __init__ (self,player,type):
         self.player = player
@@ -58,36 +58,40 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
     #do top left
     if inRange(x-1,y-1): #check tile exists
         if board[y-1][x-1] == None: #if spot empty
+          if board[x][y]!=None:
             if player == 2 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x-1,y-1],None))
-        if board[y-1][x-1].player != player: #piece is not players
+        elif board[y-1][x-1].player != player: #piece is not players
             if inRange(x-2,y-2):
                 if board[y-2][x-2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x-2,y-2],[x-1,y-1])) 
     #do top right
     if inRange(x+1,y-1): #check tile exists
         if board[y-1][x+1] == None: #if spot empty
+          if board[x][y]!=None:  
             if player == 2 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x+1,y-1],None))
-        if board[y-1][x+1].player != player: #piece is not players
+        elif board[y-1][x+1].player != player: #piece is not players
             if inRange(x+2,y-2):
                 if board[y-2][x+2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x+2,y-2],[x+1,y-1])) 
     #do bottom left
     if inRange(x-1,y+1): #check tile exists
         if board[y+1][x-1] == None: #if spot empty
+           if board[x][y]!=None:# same problem but sometimes board[x][y] == None 
             if player == 1 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x-1,y+1],None))
-        if board[y+1][x-1].player != player: #piece is not players
+        elif board[y+1][x-1].player != player: #piece is not players
             if inRange(x-2,y+2):
                 if board[y+2][x-2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x-2,y+2],[x-1,y+1])) 
     #do bottom right
     if inRange(x+1,y+1): #check tile exists
         if board[y+1][x+1] == None: #if spot empty
+          if board[x][y]!= None: #this shouldn't be neccesary but it is causing an error if it isn't there because sometimes apparently board[x][y] == None
             if player == 1 or board[x][y].type == 'king': #if able to move in direction
                 moves.append(move([x,y],[x+1,y+1],None))
-        if board[y+1][x+1].player != player: #piece is not players
+        elif board[y+1][x+1].player != player: #piece is not players
             if inRange(x+2,y+2):
                 if board[y+2][x+2] == None: #if piece has open spot to jump too
                     moves.append(move([x,y],[x+2,y+2],[x+1,y+1])) 
@@ -95,7 +99,7 @@ def checkPiece(board,player,x,y): #returns all possible moves for a piece on boa
     return moves
                         
 def inRange(x,y):
-    if (8 >= x >= 0) and (8 >= y >= 0):
+    if (8 > x >= 0) and (8 > y >= 0):
         return True
     else: 
         return False
@@ -143,6 +147,16 @@ def checkScore(board): #returns #piecesP1 - #piecesP2
                     scoreP2 += 1
     return (scoreP1 - scoreP2)
 
+def chooseRandomLegalMove(moves, player):
+  if len(moves) > 1:
+    move = moves[random.randint(0,len(moves)-1)]
+  elif len(moves) == 1:
+    move = moves[0]
+  else:
+    print('uh oh', len(moves), player)
+    
+  return move
+
 def draw(board):
     sys.stdout.write("\x1b[2J\x1b[H")
     num = 1
@@ -167,24 +181,11 @@ def draw(board):
         sys.stdout.write("\n")
     sys.stdout.write("  1 2 3 4 5 6 7 8\n")
 
-
-draw(board)
-
-
-# def findAllMoves(board):
-#     return
-
-# def findMove(board, moving): #the board is the board. moving is an array where moving[0]][moving][1] is the index for the 2d board array to point to a speciic square.
-#     movingPiece = board[moving[0]][moving][1] #hopefully either 1 or 2. if someone asked for nothing to move then it would be 0.
-#     if movingPiece.player == 1:
-#         checkingFor = 2
-#         direction = 1
-#     if movingPiece.player == 2:
-#         checkingFor = 1
-#         direction = -1
-#     if movingPiece.type == 'king':
-#         for i in range(4):
-
-#     if movingPiece.type == 'pawn':
-#         if board[moving[0]+direction][moving][1]]:
-    
+for i in range(100):
+    time.sleep(0.1)
+    if i%2 == 0:
+        player = 2
+    else:
+        player = 1
+    board = doMove(chooseRandomLegalMove(findMoves(board,player), player),board)
+    draw(board)
