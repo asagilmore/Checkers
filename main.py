@@ -1,5 +1,6 @@
 import time
 import sys
+import random
 
 class piece:
     def __init__ (self,player,type):
@@ -183,14 +184,18 @@ def draw(board):
         sys.stdout.write("\n")
     sys.stdout.write("  1 2 3 4 5 6 7 8\n")
 
+def doTurn(board):
+    p1Moves = findMoves(board,1)
+    board = doMove(p1Moves[ random.randrange(0,len(p1Moves)) ], board)
+    draw(board)
+    time.sleep(0.5)
+    p2Moves = findMoves(board,2)
+    board = doMove(p2Moves[ random.randrange(0,len(p2Moves)) ], board)    
+    draw(board)
+    time.sleep(0.5)
+    return(board)
 while True:
-    draw(board)
-    board = doMove(findMoves(board,1)[0],board)
-    time.sleep(0.5)
-    draw(board)
-    board = doMove(findMoves(board,2)[0],board)
-    time.sleep(0.5)
-
+    board = doTurn(board)
 
 
 # def findAllMoves(board):
