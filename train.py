@@ -18,11 +18,8 @@ class Layer:
     def __init__(self,num_inputs,num_outputs):
         self.weight = np.random.rand(num_inputs,num_outputs)
         self.bias = np.random.rand(1,num_outputs)
-    # computes the output Y of a layer for a given input X
-    def forward_propagation(self, input):
-        raise NotImplementedError
-
-    # computes dE/dX for a given dE/dY (and update parameters if any)
-    def backward_propagation(self, output_error, learning_rate):
-        raise NotImplementedError
-
+    def forward_prop(self,input_data):
+        self.input = input_data
+        self.output = np.dot(self.input,self.weight) + self.bias
+        return self.output
+    
