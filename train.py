@@ -1,6 +1,5 @@
 import numpy as np
 import main
-import numpy as np
 
 #we will have the network imputs as the board state, and the output be a single confidence value for the given move
 #then we basiaclly have it play against itself, and if it looses it will assume all moves it made were bad and should have been a 0 and vice versa for a win
