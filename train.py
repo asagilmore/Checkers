@@ -15,8 +15,9 @@ def sigmoid(x):
 
 
 class Layer:
-    def __init__(self, input, output):
-        self.weights = np.array(input, output)
+    def __init__(self,num_inputs,num_outputs):
+        self.weight = np.random.rand(num_inputs,num_outputs)
+        self.bias = np.random.rand(1,num_outputs)
     # computes the output Y of a layer for a given input X
     def forward_propagation(self, input):
         raise NotImplementedError
