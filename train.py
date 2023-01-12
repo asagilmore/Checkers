@@ -24,10 +24,10 @@ def sigmoid_derivative(x):
     return np.exp(-x)/ (1+np.exp(-x))^2 
 
 def tanh(x):
-    return np.tanh(x);
+    return np.tanh(x)
 
 def tanh_derivative(x):
-    return 1-np.tanh(x)**2;
+    return 1-np.tanh(x)**2
 
 def cost_function(prediction,expected):
     return np.mean(np.power(expected-prediction,2)) # average of (expected-predicted)^2
