@@ -35,10 +35,6 @@ def cost_function(prediction,expected):
 def cost_function_derivative(prediction,expected):
     return 2*(prediction-expected)/expected.size
 
-#Gloabals
-
-learning_rate = 0.001
-
 class Layer:
     def __init__(self,num_inputs,num_outputs):
         self.weight = np.random.rand(num_inputs,num_outputs)
@@ -62,5 +58,16 @@ class Activation_Layer:
         return self.activation_derivative(self.input) * output_error
 
 class Network:
-
+    def __init__(self):
+        self.layers = []
+        self.loss = None
+        self.loss_derivative = None
+    
+    def add(self,layer):
+        self.layers.append(layer)
+    
+    def lossFunction(self,loss,loss_derivative):
+        self.loss = loss
+        self.loss_derivative = loss_derivative
+    
  
