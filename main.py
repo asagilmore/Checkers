@@ -194,8 +194,10 @@ def doTurn(board):
     draw(board)
     time.sleep(0.5)
     return(board)
-while True:
-    board = doTurn(board)
+
+if __name__ == '__main__':
+    while True:
+        board = doTurn(board)
 
 
 # def findAllMoves(board):
