@@ -1,15 +1,10 @@
 import numpy as np
-import layers
-
-#we will have the network imputs as the board state, and the output be a single confidence value for the given move
-#then we basiaclly have it play against itself, and if it looses it will assume all moves it made were bad and should have been a 0 and vice versa for a win
-#we then train the weights for each move given the output and expected value
 
 class Network:
     def __init__(self):
         self.layers = []
-        self.loss = None
-        self.loss_derivative = None
+        self.cost = None
+        self.cost_derivative = None
     
     def add(self,layer):
         self.layers.append(layer)
@@ -42,12 +37,12 @@ class Network:
                 for layer in self.layers:
                     output = layer.forward_propagation(output)
                 
-                err += self.loss(output,output_data[j])
+                err += self.cost(output,output_data[j])
 
-                error = self.loss_derivative(output_data[j],output)
+                error = self.cost_derivative(output_data[j],output)
 
                 for layer in reversed(self.layers):
                     error = layer.backward_propagation(error,learning_rate)
             
-            err /= samples #average error
-
+            err /= samples #average error   
+            print('iteration %d/%d   error=%f' % (i+1, interations, err))
