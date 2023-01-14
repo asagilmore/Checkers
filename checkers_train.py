@@ -41,6 +41,8 @@ def playCycle(games,net):
             if score[0] == 0 or score[1] == 0:
                 return
             doTurn(board,net)
+            checkers.flipBoard(board)
+            
 
 def doTurn(board,net): #does turn for p1 only
     moveBoards = []
@@ -51,7 +53,9 @@ def doTurn(board,net): #does turn for p1 only
         moveBoards.append(checkers.doMove(move,board))
     
     for i in moveBoards:
-        net.
+        netConfidence.append(net.predict(translateBoard(i)))
+    
+
 
 
 
