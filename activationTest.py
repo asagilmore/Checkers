@@ -1,4 +1,4 @@
-import main
+import checkers
 import activation
 import layers as layer
 import numpy as np

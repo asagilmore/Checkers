@@ -1,2 +1,2 @@
 # Checkers
-Checkers AI
+Checkers AI built with numpy

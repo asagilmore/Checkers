@@ -198,6 +198,7 @@ def doTurn(board):
 if __name__ == '__main__':
     while True:
         board = doTurn(board)
+        draw(board)
 
 
 # def findAllMoves(board):
