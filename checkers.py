@@ -158,7 +158,7 @@ def checkScore(board): #returns #piecesP1 - #piecesP2
                     scoreP1 += 1
                 if x.player == 2:
                     scoreP2 += 1
-    return (scoreP1 - scoreP2)
+    return[scoreP1,scoreP2]
 
 def draw(board):
     sys.stdout.write("\x1b[2J\x1b[H")

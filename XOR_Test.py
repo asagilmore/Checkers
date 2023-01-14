@@ -21,9 +21,9 @@ net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 
 
 net.setCost(cost.MSE,cost.MSE_derivative)
-net.train(input_data,output_data,interations=1000,learning_rate=0.01)
+net.train(input_data,output_data,interations=10,learning_rate=0.01)
 
-out = net.predict(input_data)
+out = net.predict([0,0])
 print(out)
 
 save(net,"XOR.pkl")

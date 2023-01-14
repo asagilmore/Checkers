@@ -28,12 +28,33 @@ def translateBoard(board): #converts to 1d array [empty,player1,player2,isKing] 
 
     return np.array(output)
 
-def playCycle(games):
+def playCycle(games,net):
     data_train = []
     data_answer = []
     for i in range(games):
         boardsP1 = []
         boardsP2 = []
+        board = checkers.board 
+        
+        while True:
+            score = checkers.checkScore(board)
+            if score[0] == 0 or score[1] == 0:
+                return
+            doTurn(board,net)
+
+def doTurn(board,net): #does turn for p1 only
+    moveBoards = []
+    netConfidence = []
+    moves = checkers.findMoves(board)
+
+    for move in moves:
+        moveBoards.append(checkers.doMove(move,board))
+    
+    for i in moveBoards:
+        net.
+
+
+
 
 net = Network()
 
