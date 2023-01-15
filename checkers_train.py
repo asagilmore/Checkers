@@ -38,7 +38,7 @@ def playCycle(games,net):
         board = checkers.board 
         winner = 0
         
-        while score[0] != 0 and score[1] != -0:
+        while score[0] != 0 and score[1] != -0: #do game
             score = checkers.checkScore(board)
 
             if score[0] == 0:
@@ -48,7 +48,7 @@ def playCycle(games,net):
                 winner = 2
                 return 
 
-            doTurn(board,net)
+            board = doTurn(board,net)
             checkers.flipBoard(board)
             boardsP1.append(board)  
 
@@ -59,9 +59,36 @@ def playCycle(games,net):
                 winner = 1
                 return 
 
-            doTurn(board,net)
+            board = doTurn(board,net)
             checkers.flipBoard(board) 
-            boardsP2.axppend(board)
+            boardsP2.append(board)
+        
+        #append data_train and data_awnser
+        if winner == 0:
+            return ValueError
+        elif winner == 1:
+
+            data_train.extend(boardsP1)
+            for i in range(len(data_train)):
+                data_answer.append(1)
+
+            data_train.extend(boardsP2)
+            for i in range(len(data_train)):
+                data_answer.append(0)
+        elif winner == 2:
+
+            data_train.extend(boardsP2)
+            for i in range(len(data_train)):
+                data_answer.append(1)
+
+            data_train.extend(boardsP1)
+            for i in range(len(data_train)):
+                data_answer.append(0)
+
+    return [data_train,data_answer]
+
+
+
         
         
     
@@ -98,6 +125,14 @@ net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 net.add(Connected_Layer(128,1))
 net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 
+data = playCycle(10,net)
+
+training_set = data[0]
+
+answer_set = data[1]
+
+print(training_set)
+print(answer_set)
 
 
 #def playCycle(games,net):
