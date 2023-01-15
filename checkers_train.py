@@ -3,6 +3,7 @@ from network import Network
 from layers import Layer,Activation_Layer,Connected_Layer
 import cost
 import activation
+import random
 
 from save import save,load
 
@@ -35,15 +36,35 @@ def playCycle(games,net):
         boardsP1 = []
         boardsP2 = []
         board = checkers.board 
+        winner = 0
         
-        while True:
+        while score[0] != 0 and score[1] != -0:
             score = checkers.checkScore(board)
-            if score[0] == 0 or score[1] == 0:
+
+            if score[0] == 0:
+                winner = 1
                 return
+            if score[1] == 0:
+                winner = 2
+                return 
+
             doTurn(board,net)
             checkers.flipBoard(board)
-            
+            boardsP1.append(board)  
 
+            if score[0] == 0:
+                winner = 2
+                return
+            if score[1] == 0:
+                winner = 1
+                return 
+
+            doTurn(board,net)
+            checkers.flipBoard(board) 
+            boardsP2.axppend(board)
+        
+        
+    
 def doTurn(board,net): #does turn for p1 only
     moveBoards = []
     netConfidence = []
@@ -55,6 +76,10 @@ def doTurn(board,net): #does turn for p1 only
     for i in moveBoards:
         netConfidence.append(net.predict(translateBoard(i)))
     
+    return np.random.choice(a=moveBoards,size=1,p=netConfidence)
+
+    
+
 
 
 
