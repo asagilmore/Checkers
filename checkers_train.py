@@ -106,10 +106,23 @@ def doTurn(board,net): #does turn for p1 only
     return np.random.choice(a=moveBoards,size=1,p=netConfidence)
 
     
+def weightedChoice(confidences):
+    denom = 1/sum(confidences)
+    weighted = np.dot(confidences,denom)
+    sumSoFar = 0
+    for i in range(len(weighted)):
+        newWeight = weighted[i]+sumSoFar
+        sumSoFar+=weighted[i]
+        weighted[i] = newWeight
+    newFloat = random.random()
+    found = False
+    for i in range(len(weighted)):
+      if found == False and newFloat < weighted[i]:
+        found = True
+        move = i
+    return(move)
 
-
-
-
+print(weightedChoice([0.2, 0.4, 0.4]))
 
 
 net = Network()
