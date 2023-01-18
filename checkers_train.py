@@ -37,34 +37,30 @@ def playCycle(games,net):
         boardsP2 = []
         board = checkers.board 
         winner = 0
-        score = [1,1]
-        while score[0] != 0 and score[1] != 0: #do game
-            turn = 1
-            score = checkers.checkScore(board)
+        score = checkers.checkScore(board)
+        turn = 1
 
-            if score[0] == 0:
-                winner = 1
-                return
-            if score[1] == 0:
-                winner = 2
-                return 
+        while score[0] != 0 and score[1] != 0: #do game
+            
+            score = checkers.checkScore(board)
 
             board = doTurn(board,net)
             checkers.flipBoard(board)
             boardsP1.append(board)  
 
-            if score[0] == 0:
-                winner = 2
-                return
-            if score[1] == 0:
-                winner = 1
-                return 
-
             board = doTurn(board,net)
             checkers.flipBoard(board) 
             boardsP2.append(board)
             print(f'playing game turn:{turn}, score:{score}')
-        
+            turn += 1
+
+        if score[0] == 0:
+            winner = 2
+            return
+        if score[1] == 0:
+            winner = 1
+            return 
+
         #append data_train and data_awnser
         if winner == 0:
             return ValueError
@@ -109,6 +105,7 @@ def doTurn(board,net): #does turn for p1 only
 
     
 def weightedChoice(confidences):
+    #print(confidences)
     denom = 1/sum(confidences)
     weighted = np.dot(confidences,denom)
     sumSoFar = 0
@@ -135,8 +132,9 @@ net.add(Connected_Layer(256,1))
 net.add(Activation_Layer(activation.sigmoid,activation.sigmoid_derivative))
 
 if __name__ == "__main__":
-    translated = translateBoard(checkers.board)
-    print(translated)
-    print(net.predict([translated]))
-    
-#def playCycle(games,net):
+    save(net,"network_0")
+    for i in range(1,2):
+        net = load("network_" + str(i-1))
+        trainingData = playCycle(100,net)
+        net.train(trainingData[0],trainingData[1],1000,0.01)
+        save(net,"network_"+str(i))

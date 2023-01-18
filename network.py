@@ -14,7 +14,7 @@ class Network:
         self.cost = cost
         self.cost_derivative = cost_derivative
     
-    def predict(self,input_data):
+    def predictList(self,input_data):
         samples = len(input_data)
         result = []
 
@@ -26,6 +26,11 @@ class Network:
         
         return result
     
+    def predict(self,input_data):
+        output = input_data
+        for layer in self.layers:
+            output = layer.forward_propagation(output)
+        return output[0][0]
     def train(self, input_data, output_data, interations, learning_rate): #output_data is true/expected result of input_data
 
         samples = len(input_data)

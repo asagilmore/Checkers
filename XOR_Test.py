@@ -32,5 +32,5 @@ if __name__ == '__main__':
 
     net = load("XOR.pkl")
 
-    out = net.predict(input_data)
+    out = net.predictList(input_data)
     print(out)
