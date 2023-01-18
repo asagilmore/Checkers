@@ -19,7 +19,7 @@ class Network:
 
         for i in range(samples):
             output = input_data[i]
-            for layer in self.layers:
+            for layer in self.layers: #propagate through layers in network
                 output = layer.forward_propagation(output)
             result.append(output)
         

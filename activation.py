@@ -3,7 +3,7 @@ import numpy as np
 def ReLU(x):
     return np.maximum(0,x)
 
-def ReLU_Derivative(x):
+def ReLU_derivative(x):
     return np.where(x>0,1,0) #sets range of array to 0,1, rounds any non 0 to 1 
 
 leakySlope = 0.05
@@ -11,7 +11,7 @@ leakySlope = 0.05
 def LeakyReLU(x):
     return np.where(x>0,x,x*leakySlope)
 
-def LeakyReLU_Derivative(x):
+def LeakyReLU_derivative(x):
     return np.where(x>0,1,leakySlope)
 
 def sigmoid(x):

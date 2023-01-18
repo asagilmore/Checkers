@@ -152,7 +152,7 @@ def checkScore(board): #returns #piecesP1 - #piecesP2
     scoreP1 = 0
     scoreP2 = 0
     for i in board:
-        for x in board:
+        for x in i:
             if x != None:
                 if x.player == 1:
                     scoreP1 += 1

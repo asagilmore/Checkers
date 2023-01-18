@@ -37,8 +37,9 @@ def playCycle(games,net):
         boardsP2 = []
         board = checkers.board 
         winner = 0
-        
-        while score[0] != 0 and score[1] != -0: #do game
+        score = [1,1]
+        while score[0] != 0 and score[1] != 0: #do game
+            turn = 1
             score = checkers.checkScore(board)
 
             if score[0] == 0:
@@ -62,6 +63,7 @@ def playCycle(games,net):
             board = doTurn(board,net)
             checkers.flipBoard(board) 
             boardsP2.append(board)
+            print(f'playing game turn:{turn}, score:{score}')
         
         #append data_train and data_awnser
         if winner == 0:
@@ -95,15 +97,18 @@ def playCycle(games,net):
 def doTurn(board,net): #does turn for p1 only
     moveBoards = []
     netConfidence = []
-    moves = checkers.findMoves(board)
+    moves = checkers.findMoves(board,1)
 
     for move in moves:
         moveBoards.append(checkers.doMove(move,board))
     
     for i in moveBoards:
-        netConfidence.append(net.predict(translateBoard(i)))
-    
-    return np.random.choice(a=moveBoards,size=1,p=netConfidence)
+        prediction = net.predict([translateBoard(i)])
+        print(prediction)
+        netConfidence.append(prediction[0][0][0]) #this is pretty ugly, but idk why net.predict is returns a ton of nested arrays, anyway just bandaid solution here but it works
+    print(netConfidence)
+    choice = np.random.choice(a=moveBoards,size=1,p=netConfidence) #this is currently the problem, idk how we should randomly choose the move
+    return choice
 
     
 
@@ -115,24 +120,13 @@ def doTurn(board,net): #does turn for p1 only
 net = Network()
 
 net.add(Connected_Layer(256,256))
-net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
-net.add(Connected_Layer(256,256))
-net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
-net.add(Connected_Layer(256,256))
-net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
-net.add(Connected_Layer(256,128))
-net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
-net.add(Connected_Layer(128,1))
-net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
+net.add(Activation_Layer(activation.sigmoid,activation.sigmoid_derivative))
+net.add(Connected_Layer(256,1))
+net.add(Activation_Layer(activation.sigmoid,activation.sigmoid_derivative))
 
-data = playCycle(10,net)
-
-training_set = data[0]
-
-answer_set = data[1]
-
-print(training_set)
-print(answer_set)
-
-
+if __name__ == "__main__":
+    translated = translateBoard(checkers.board)
+    print(translated)
+    print(net.predict([translated]))
+    
 #def playCycle(games,net):

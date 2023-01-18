@@ -12,8 +12,8 @@ class Layer:
 
 class Connected_Layer(Layer):
     def __init__(self,num_inputs,num_outputs):
-        self.weights = np.random.rand(num_inputs,num_outputs)
-        self.bias = np.random.rand(1,num_outputs)
+        self.weights = np.random.rand(num_inputs,num_outputs) - 0.5 
+        self.bias = np.random.rand(1,num_outputs) - 0.5
     def forward_propagation(self,input_data):
         self.input = input_data
         self.output = np.dot(self.input,self.weights) + self.bias
@@ -27,9 +27,6 @@ class Connected_Layer(Layer):
         self.weights -= learning_rate * weight_error
         self.bias -= learning_rate * output_error
         return input_error
-
-
-        
 
 class Activation_Layer(Layer):
     def __init__(self,activation,activation_derivative):
