@@ -103,12 +103,9 @@ def doTurn(board,net): #does turn for p1 only
         moveBoards.append(checkers.doMove(move,board))
     
     for i in moveBoards:
-        prediction = net.predict([translateBoard(i)])
-        print(prediction)
-        netConfidence.append(prediction[0][0][0]) #this is pretty ugly, but idk why net.predict is returns a ton of nested arrays, anyway just bandaid solution here but it works
-    print(netConfidence)
-    choice = np.random.choice(a=moveBoards,size=1,p=netConfidence) #this is currently the problem, idk how we should randomly choose the move
-    return choice
+        netConfidence.append(net.predict(translateBoard(i)))
+    
+    return moveBoards[weightedChoice(netConfidence)]
 
     
 def weightedChoice(confidences):
