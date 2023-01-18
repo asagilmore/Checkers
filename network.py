@@ -5,6 +5,7 @@ class Network:
         self.layers = []
         self.cost = None
         self.cost_derivative = None
+        self.games = 0
     
     def add(self,layer):
         self.layers.append(layer)
