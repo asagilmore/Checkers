@@ -45,12 +45,12 @@ def playCycle(games,net):
             score = checkers.checkScore(board)
 
             board = doTurn(board,net)
-            checkers.flipBoard(board)
             boardsP1.append(board)  
+            checkers.flipBoard(board)
 
             board = doTurn(board,net)
-            checkers.flipBoard(board) 
             boardsP2.append(board)
+            checkers.flipBoard(board) 
             print(f'playing game turn:{turn}, score:{score}')
             turn += 1
 
