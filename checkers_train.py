@@ -9,7 +9,7 @@ from save import save,load
 import ipdb
 
 import numpy as np
-
+    
 def translateBoard(board): #converts to 1d array [empty,player1,player2,isKing] (note: stored as 1d string of numbers, not nested arrays)
     output = []
 
@@ -29,7 +29,21 @@ def translateBoard(board): #converts to 1d array [empty,player1,player2,isKing] 
                     output.append(0)
 
     return np.array(output)
-
+def reverseTranslateBoard(translateBoard):
+    output = []
+    for i in translateBoard/4:
+        if translateBoard[i*4] == 0:
+            output.append(None)
+        else:
+            if translateBoard[i*4+1] == 1:
+                player = 1
+            else:
+                player = 2
+            if translateBoard[i*4+3] == 1:
+                type = 'king'
+            else:
+                type = 'pawn'
+            output.append(checkers.piece(player, type))
 def playCycle(games,net):
     data_train = []
     data_answer = []
@@ -97,8 +111,16 @@ def doTurn(board,net): #does turn for p1 only
     netConfidence = []
     moves = checkers.findMoves(board,1)
     for move in moves:
+<<<<<<< HEAD
         moveBoards += [checkers.doMove(move,board)]     
 
+=======
+        boardToChange = []
+        for i in range(len(board)):
+            boardToChange.append(board[i])
+        moveBoards.append(checkers.doMove(move,boardToChange))
+    
+>>>>>>> f85c90a3ed6e5f53afb330e90527be8621da1788
     for i in moveBoards:
         netConfidence.append(net.predict(translateBoard(i)))
     
