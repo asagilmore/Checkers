@@ -63,10 +63,11 @@ def playCycle(games,net):
             
             boardsP1.append(board)  
             checkers.flipBoard(board)
-
-            board = doTurn(board,net).copy()
-            boardsP2.append(board)
-            checkers.flipBoard(board) 
+            score = checkers.checkScore(board)
+            if score[0] != 0 and score[1] != 0:
+                board = doTurn(board,net)
+                boardsP2.append(board)
+                checkers.flipBoard(board) 
             print(f'playing game turn:{turn}, score:{score}')
             checkers.draw(board,False)
             turn += 1
