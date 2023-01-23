@@ -4,8 +4,9 @@ from layers import Layer,Activation_Layer,Connected_Layer
 import cost
 import activation
 import random
-
+import time
 from save import save,load
+import ipdb
 
 import numpy as np
 
@@ -41,9 +42,7 @@ def playCycle(games,net):
         turn = 1
 
         while score[0] != 0 and score[1] != 0: #do game
-            
-            score = checkers.checkScore(board)
-
+            #ipdb.set_trace()
             board = doTurn(board,net)
             boardsP1.append(board)  
             checkers.flipBoard(board)
@@ -52,7 +51,10 @@ def playCycle(games,net):
             boardsP2.append(board)
             checkers.flipBoard(board) 
             print(f'playing game turn:{turn}, score:{score}')
+            checkers.draw(board,False)
             turn += 1
+
+            score = checkers.checkScore(board)
 
         if score[0] == 0:
             winner = 2
@@ -94,20 +96,24 @@ def doTurn(board,net): #does turn for p1 only
     moveBoards = []
     netConfidence = []
     moves = checkers.findMoves(board,1)
-
     for move in moves:
-        moveBoards.append(checkers.doMove(move,board))
-    
+        moveBoards += [checkers.doMove(move,board)]     
+
     for i in moveBoards:
         netConfidence.append(net.predict(translateBoard(i)))
     
-    return moveBoards[weightedChoice(netConfidence)]
+
+    
+    move =  moveBoards[weightedChoice(netConfidence)]
+    return move
 
     
 def weightedChoice(confidences):
     #print(confidences)
     denom = 1/sum(confidences)
     weighted = np.dot(confidences,denom)
+    #print(confidences)
+    #print(weighted)
     sumSoFar = 0
     for i in range(len(weighted)):
         newWeight = weighted[i]+sumSoFar
@@ -121,15 +127,12 @@ def weightedChoice(confidences):
         move = i
     return(move)
 
-print(weightedChoice([0.2, 0.4, 0.4]))
-
-
 net = Network()
 
 net.add(Connected_Layer(256,256))
-net.add(Activation_Layer(activation.sigmoid,activation.sigmoid_derivative))
+net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 net.add(Connected_Layer(256,1))
-net.add(Activation_Layer(activation.sigmoid,activation.sigmoid_derivative))
+net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 
 if __name__ == "__main__":
     save(net,"network_0")

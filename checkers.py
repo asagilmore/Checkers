@@ -1,6 +1,7 @@
 import time
 import sys
 import random
+import ipdb
 
 class piece:
     def __init__ (self,player,type):
@@ -135,7 +136,6 @@ def flipBoard(board):
     return board
 
 def doMove(move,board): #returns 2d board array
-
     board[move.position[1]][move.position[0]] = board[move.target[1]][move.target[0]]
 
     if move.becomeKing:
@@ -160,8 +160,9 @@ def checkScore(board): #returns #piecesP1 - #piecesP2
                     scoreP2 += 1
     return[scoreP1,scoreP2]
 
-def draw(board):
-    sys.stdout.write("\x1b[2J\x1b[H")
+def draw(board,cls):
+    if cls == True:
+        sys.stdout.write("\x1b[2J\x1b[H")
     num = 1
     for i in board:
         sys.stdout.write("\033[0;37;39m" + str(num) + " ")

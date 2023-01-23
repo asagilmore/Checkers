@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     print(f'test {net.predict([1,1])}')
     net.setCost(cost.MSE,cost.MSE_derivative)
-    net.train(input_data,output_data,interations=100,learning_rate=0.1)
+    net.train(input_data,output_data,interations=10000,learning_rate=0.1)
 
     out = net.predict([0,0])
     print(out)
