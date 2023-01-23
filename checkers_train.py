@@ -68,11 +68,10 @@ def playCycle(games,net):
                 board = doTurn(board,net)
                 boardsP2.append(board)
                 checkers.flipBoard(board) 
-            print(f'playing game turn:{turn}, score:{score}')
-            checkers.draw(board,False)
-            turn += 1
-
-            score = checkers.checkScore(board)
+                print(f'playing game turn:{turn}, score:{score}')
+                checkers.draw(board,False)
+                turn += 1
+                score = checkers.checkScore(board)
 
         if score[0] == 0:
             winner = 2
