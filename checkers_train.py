@@ -50,18 +50,21 @@ def playCycle(games,net):
     for i in range(games):
         boardsP1 = []
         boardsP2 = []
-        board = checkers.board 
+        board = checkers.board.copy() 
         winner = 0
         score = checkers.checkScore(board)
         turn = 1
 
         while score[0] != 0 and score[1] != 0: #do game
             #ipdb.set_trace()
-            board = doTurn(board,net)
+            
+            
+            board = doTurn(board,net).copy()
+            
             boardsP1.append(board)  
             checkers.flipBoard(board)
 
-            board = doTurn(board,net)
+            board = doTurn(board,net).copy()
             boardsP2.append(board)
             checkers.flipBoard(board) 
             print(f'playing game turn:{turn}, score:{score}')
@@ -110,9 +113,12 @@ def doTurn(board,net): #does turn for p1 only
     moveBoards = []
     netConfidence = []
     moves = checkers.findMoves(board,1)
+    print(f'moves:{moves}')
     for move in moves:
         moveBoards += [checkers.doMove(move,board)]     
-
+    
+    print('after changing moveboards')
+    checkers.draw(board, False)
     for i in moveBoards:
         netConfidence.append(net.predict(translateBoard(i)))
     

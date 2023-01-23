@@ -5,12 +5,6 @@ class Network:
         self.layers = []
         self.cost = None
         self.cost_derivative = None
-<<<<<<< HEAD
-
-=======
-        self.games = 0
-    
->>>>>>> c9d74b27e1b32c05d8157ef076d4c3ca2e4dbdf1
     def add(self,layer):
         self.layers.append(layer)
     
