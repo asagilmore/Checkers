@@ -114,23 +114,17 @@ def doTurn(board,net): #does turn for p1 only
     moveBoards = []
     netConfidence = []
     moves = checkers.findMoves(board,1)
-    print(f'moves:{moves}')
     preTurnBoard = copy.deepcopy(board)
-    print('prepreturn board')
-    checkers.draw(preTurnBoard, False)
     for move in moves:
         board = copy.deepcopy(preTurnBoard)
         moveBoards += [checkers.doMove(move,board)]     
         board = copy.deepcopy(preTurnBoard)
-    print('after changing moveboards')
-    checkers.draw(preTurnBoard, False)
     for i in moveBoards:
         netConfidence.append(net.predict(translateBoard(i)))
     
 
     
     move =  moveBoards[weightedChoice(netConfidence)]
-    ipdb.set_trace()
     return move
     
     
