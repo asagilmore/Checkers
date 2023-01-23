@@ -111,16 +111,8 @@ def doTurn(board,net): #does turn for p1 only
     netConfidence = []
     moves = checkers.findMoves(board,1)
     for move in moves:
-<<<<<<< HEAD
         moveBoards += [checkers.doMove(move,board)]     
 
-=======
-        boardToChange = []
-        for i in range(len(board)):
-            boardToChange.append(board[i])
-        moveBoards.append(checkers.doMove(move,boardToChange))
-    
->>>>>>> f85c90a3ed6e5f53afb330e90527be8621da1788
     for i in moveBoards:
         netConfidence.append(net.predict(translateBoard(i)))
     
