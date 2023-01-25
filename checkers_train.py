@@ -61,12 +61,12 @@ def playCycle(games,net):
             
             board = doTurn(board,net)
             
-            boardsP1.append(board)  
+            boardsP1.append(translateBoard(board))  
             checkers.flipBoard(board)
             score = checkers.checkScore(board)
             if score[0] != 0 and score[1] != 0:
                 board = doTurn(board,net)
-                boardsP2.append(board)
+                boardsP2.append(translateBoard(board))
                 checkers.flipBoard(board) 
                 print(f'playing game turn:{turn}, score:{score}')
                 checkers.draw(board,False)
@@ -75,10 +75,8 @@ def playCycle(games,net):
 
         if score[0] == 0:
             winner = 2
-            return
         if score[1] == 0:
             winner = 1
-            return 
 
         #append data_train and data_awnser
         if winner == 0:
@@ -86,22 +84,22 @@ def playCycle(games,net):
         elif winner == 1:
 
             data_train.extend(boardsP1)
-            for i in range(len(data_train)):
+            for i in range(len(boardsP1)):
                 data_answer.append(1)
 
             data_train.extend(boardsP2)
-            for i in range(len(data_train)):
+            for i in range(len(boardsP2)):
                 data_answer.append(0)
         elif winner == 2:
 
             data_train.extend(boardsP2)
-            for i in range(len(data_train)):
+            for i in range(len(boardsP2)):
                 data_answer.append(1)
 
             data_train.extend(boardsP1)
-            for i in range(len(data_train)):
+            for i in range(len(boardsP1)):
                 data_answer.append(0)
-
+            
     return [data_train,data_answer]
 
 
@@ -153,10 +151,13 @@ net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 net.add(Connected_Layer(256,1))
 net.add(Activation_Layer(activation.tanh,activation.tanh_derivative))
 
+net.setCost(cost.MAE,cost.MAE_derivative)
+
 if __name__ == "__main__":
     save(net,"network_0")
     for i in range(1,2):
         net = load("network_" + str(i-1))
-        trainingData = playCycle(100,net)
+        trainingData = playCycle(1,net)
         net.train(trainingData[0],trainingData[1],1000,0.01)
+        
         save(net,"network_"+str(i))

@@ -1,4 +1,5 @@
 import numpy as np
+import ipdb
 
 class Network:
     def __init__(self):
@@ -42,7 +43,7 @@ class Network:
                     output = layer.forward_propagation(output)
                 
                 err += self.cost(output,output_data[j])
-
+                
                 error = self.cost_derivative(output_data[j],output)
 
                 for layer in reversed(self.layers):
