@@ -1,3 +1,0 @@
-things do get done
-# impliment mini batch GD, aka average cost over num of samples and then update weights with that cost
-#

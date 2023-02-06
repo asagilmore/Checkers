@@ -1,4 +1,6 @@
 import numpy as np
+import math
+import random
 import ipdb
 
 class Network:
@@ -30,24 +32,57 @@ class Network:
         for layer in self.layers:
             output = layer.forward_propagation(output)
         return output[0][0]
-    def train(self, input_data, output_data, interations, learning_rate): #output_data is true/expected result of input_data
+    def train(self, input_data, output_data, iterations, learning_rate): #output_data is true/expected result of input_data #batch_size as % of input data to train on
 
+        input_data = np.array(input_data)
         samples = len(input_data)
 
-        for i in range(interations):
-            err = 0
-            for j in range(samples):
+        for i in range(iterations):
 
+            err = 0
+
+            for j in range(samples):
                 output = input_data[j]
                 for layer in self.layers:
                     output = layer.forward_propagation(output)
                 
                 err += self.cost(output,output_data[j])
-                
                 error = self.cost_derivative(output_data[j],output)
-
                 for layer in reversed(self.layers):
                     error = layer.backward_propagation(error,learning_rate)
             
             err /= samples #average error   
-            print('iteration %d/%d   error=%f' % (i+1, interations, err))
+            print('iteration %d/%d   error=%f' % (i+1, iterations, err))
+
+    def batchTrain(self, input_data, output_data, iterations, learning_rate, batch_size): #output_data is true/expected result of input_data #batch_size as % of input data to train on
+        
+        if len(input_data) != len(output_data): #make sure input and output data is matched
+            return error
+
+        training_data = np.array([[input_data[i],output_data[i]] for i in range(len(input_data))])
+        batch_len = math.floor(len(training_data)*batch_size)
+
+        for i in range(iterations):
+
+            err = 0
+            random.shuffle(training_data)
+            error = np.zeros(len(output_data[0])) 
+            for j in range(batch_len):
+                
+                output = training_data[j][0]
+
+                for layer in self.layers:
+                    output = layer.forward_propagation(output)
+                
+                err += self.cost(output,training_data[j][1])
+                error += self.cost_derivative(training_data[j][1],output[0])
+
+            error = np.divide(error,batch_len) #average error
+            for layer in reversed(self.layers):
+                error = layer.backward_propagation(error,learning_rate)
+            
+            err /= batch_len #average error   
+            print('iteration %d/%d   error=%f' % (i+1, iterations, err))
+
+
+#for in
