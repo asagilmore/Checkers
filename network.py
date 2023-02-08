@@ -35,6 +35,7 @@ class Network:
     def train(self, input_data, output_data, iterations, learning_rate): #output_data is true/expected result of input_data #batch_size as % of input data to train on
 
         input_data = np.array(input_data)
+        #good so far
         samples = len(input_data)
 
         for i in range(iterations):
@@ -42,12 +43,13 @@ class Network:
             err = 0
 
             for j in range(samples):
-                output = input_data[j]
+                output = input_data[j] 
                 for layer in self.layers:
                     output = layer.forward_propagation(output)
                 
                 err += self.cost(output,output_data[j])
                 error = self.cost_derivative(output_data[j],output)
+                
                 for layer in reversed(self.layers):
                     error = layer.backward_propagation(error,learning_rate)
             

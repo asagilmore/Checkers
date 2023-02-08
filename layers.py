@@ -20,6 +20,12 @@ class Connected_Layer(Layer):
         return self.output
     def backward_propagation(self,output_error,learning_rate):
         #calculate errors
+        print(f'backward propagating')
+        print(f'self.input {self.input} output_error{output_error}')
+        output_error = output_error.reshape(-1)
+        self.input = self.input.reshape(-1)
+        if output_error.shape[0]==1:
+            output_error = output_error[0]       
         input_error = np.dot(output_error,self.weights.T)
         weight_error = np.dot(self.input.T,output_error)
 
